@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<meta name="author" content="SHI CHENGGEN">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>测试管理系统</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/layer.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css.map">
+<script src="js/jquery-1.12.0.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.bootstrap.min.js"></script>
+<script src="js/bootstrapValidator.min.js"></script>
+<script src="js/bootstrap-tab.js"></script>
+<script src="js/layer.js"></script>
+<script src="js/jquery.qrcode.logo.min.js"></script>
+<script src="js/common.js"></script>
+
+</head>
+<body>
+	<div class="container">
+			<div class="modal show" id="loginModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close">&times;</button>
+							<h1>登录</h1>
+						</div>
+						
+						<div class="modal-body">
+							<form class="form-inline">
+					        	<div class="form-group-lg">
+					            	<label class="">登陆账号:</label>
+					            	<div class="input-group">
+	                                	<div class="input-group-addon">
+	                                		<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+	                                	</div>
+						                <input type="text" id="userId" name="userId" class="form-control" placeholder="请输入登陆账号" style="width:292px;"/>
+					            	</div>
+					            </div>
+					            <br>
+					            <div class="form-group-lg">
+					            	<label class="" for="password">用户密码:</label>
+					            	<div class="input-group">
+						            	<div class="input-group-addon">
+	                                		<span class="glyphicon glyphicon-lock"></span>
+	                                	</div>
+						                <input type="password" class="form-control" placeholder="请输入用户密码" id="password" style="width:252px;"/>
+						                <div class="input-group-addon" id="showPassword">
+						               		<span class="glyphicon glyphicon-eye-open"></span>
+						                </div>
+						                <input type="hidden" id="showValue" name="showValue" value="1">
+					                </div>
+					            </div>
+					            <div class=""><span style="color:red;" id="erro"></span></div>
+					            <br>
+					            </form>
+					           	<div class="checkbox">
+									<label> <input type="checkbox" id="remeberMe" name="remeberMe"> 记住密码</label> 
+									<a class="pull-right inline" id="serchPassword" href="#">忘记登录密码?</a>
+								</div>
+					           	<br>
+				            <div class="center-block">
+					            <button type="button" id="login" class="btn btn-success ">登陆</button>
+					        	<button type="button" id="regist" class="btn btn-info ">注册</button>
+				            </div>
+					</div>
+					</div>
+				</div>
+			</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.12.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	
+	//登录
+} );
+
+//登录
+$("#login").on("click",getLogin);
+
+//注册
+$("#regist").on("click",function(){
+	window.document.location.href="regist.html";
+})
+
+//显示密码
+$("#showPassword").on("click",getShowPassword);
+
+function getLogin(){
+	$.ajax({
+		url:'comm/test.action?noCache='+ new Date().getTime(),
+		dataType:'json',
+		data : {
+			ACTION_NAME: 'LOGIN',
+			loginName : $("#userId").val(),
+			password : $("#password").val()
+		},
+		timeout:20000,
+		type : 'POST',
+		success : function(json){
+			if(json.ACTION_RETURN_CODE == '000000'){
+				/* window.location.href='../../regist.html?' */
+				window.document.location.href="home.html";
+			}else{
+				$("#erro").html(json.ACTION_RETURN_MESSAGE);
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("网络异常!");
+		}
+	})
+}
+
+//显示密码
+function getShowPassword(){
+	if($("#showValue").val()=="1"){
+		$("#password").attr("type","text");
+		$("#showValue").val("2");
+	}else{
+		$("#password").attr("type","password");
+		$("#showValue").val("1");
+	}
+}
+
+/* function selectCount(){
+	$.ajax({
+		url:'comm/test.action?noCache='+ new Date().getTime(),
+		dataType:'json',
+		data:{
+			ACTION_NAME:'SELECT_COUNT'
+		},
+		timeout:20000,
+		type:'POST',
+		success : function(json){
+			if(json.ACTION_RETURN_CODE == "000000"){
+				var res = json.ACTION_INFO.data;
+				$("#count").val(res);
+			}
+		}
+	});
+} */
+</script>
+</html>

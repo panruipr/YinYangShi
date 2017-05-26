@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="User">
+    <resultMap id="userResult" class="com.cn.pr.pojo.User">
+        <result column="USER_NAME" property="name" />
+        <result column="USER_AGE" property="age" />
+        <result column="USER_SEX" property="sex"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="LOGIN_NAME" property="loginName"/>
+        <result column="LOGIN_PASS" property="password"/>
+    </resultMap>
+    <!--resultClass:返回参数类型  resultMap:返回成员映射  parameterClass:参数类型  parameterMap:是参数映射一般使用parameterClass-->
+    <select id="getTotalCount" resultClass="java.lang.Integer" >
+        SELECT COUNT(*) FROM  USER
+    </select>
+    
+    <select id="getLogin" resultMap="userResult" parameterClass="com.cn.pr.pojo.User">
+    		SELECT * FROM USER 
+    		<dynamic prepend="WHERE">
+    			<isNotNull prepend="and" property="loginName">
+    				LOGIN_NAME = #loginName#
+    			</isNotNull>
+    			<isNotNull prepend="and" property="password">
+    				LOGIN_PASS = #password#
+    			</isNotNull>
+    			<isNotNull prepend="and" property="password">
+    				USER_ID = #userId#
+    			</isNotNull>
+       		</dynamic>
+    </select>
+    
+    	<insert id="insertUser" parameterClass="com.cn.pr.pojo.User">
+    	INSERT INTO USER (USER_ID,USER_NAME,USER_SEX,USER_AGE,LOGIN_NAME,LOGIN_PASS) 
+    		VALUES (#userId#,#name#,#sex#,#age#,#loginName#,#password#)
+    </insert>
+    
+</sqlMap>

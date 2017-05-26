@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/layer.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css.map">
+<script src="js/jquery-1.12.0.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.bootstrap.min.js"></script>
+<script src="js/bootstrapValidator.min.js"></script>
+<title>用户注册</title>
+</head>
+<body>
+	<div class="container">
+		<form id="regist" method="POST">
+		<div class="panel-heading clearfix inline">
+			<span style="margin-left:110px">基本信息</span><p class="pull-right" style="margin-right:100px;"><span style="color:red;">*</span>号为必填信息</p>
+		</div>
+		<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=2);height:5px;" width="80%" color=#987cb9  SIZE=10>
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label class="col-md-3 control-label"><span style="color:red;">*</span>用户昵称:</label>
+		            <div class="col-md-2">
+		                <input class="form-control" id="registUserName" name="registUserName" placeholder="请输入用户昵称" type="text">
+		            </div>
+		        </div> 
+		        
+		    	<div class="form-group">
+					<label class="col-md-3 control-label"><span style="color:red;">*</span>登陆账号:</label>
+		            <div class="col-md-2">
+		                <input class="form-control" id="registLoginName" name="registLoginName" placeholder="请输入登陆账号" type="text">
+		            </div>
+		        </div> 
+        
+		        <div class="form-group">
+		        	<label class="col-md-3 control-label" ><span style="color:red;">*</span>用户密码:</label>
+		            <div class="col-md-2">
+		            	<input class="form-control" id="registPassword" name="registPassword" placeholder="请输入用户密码" type="password">
+		            </div>
+		        </div>
+		        
+		        <div class="form-group">
+		        	<label class="col-md-3 control-label"><span style="color:red;">*</span>再次输入:</label>
+		            <div class="col-md-2">
+		            	<input class="form-control" id="registPasswordAgain" name="registPasswordAgain" placeholder="请再次输入密码" type="password">
+		            </div>
+		            <p id="registErro" style="color:red;"></p>
+		        </div>
+		        
+		        <div class="form-group">
+		        	<label class="col-md-3 control-label"><span style="color:red;">*</span>用户年龄:</label>
+		            <div class="col-md-2">
+		            	<input class="form-control" id="registUserAge" name="registUserAge" placeholder="请输入年龄" type="text">
+		            </div>
+		        </div>
+		        
+		         <!-- <div class="form-group">
+		        	<label class="col-md-3 control-label "><span style="color:red;">*</span>用户所在服务器:</label>
+		            <div class="col-md-2">
+			            <select id="registUserArea" name="registUserArea" class="form-control" style="width: 100%">
+			            	<option value="">请选择所在服务器</option>
+						</select>
+		            </div>
+		        </div> -->
+		        
+		            <div class="col-md-12" style="margin-left:190px;">
+		            	<input class="" id="registUserMel" name="registUserMel" checked="checked" type="radio" value="0">男
+		            	<input class="" id="registUserFamel" name="registUserMel" type="radio" value="1">女
+		        </div>
+		        
+		       	<div>
+		       		<div class="col-md-2"></div>
+    				<pre class="pre-scrollable col-md-9" >我已同意上述条款</pre>
+    			</div>
+    			<br/>
+    			
+    			<div class="form-group">
+    				<div class="col-md-2"></div>
+		        	<div class="checkbox col-md-2">
+					 <label> <input type="checkbox" id="remeberMe" name="remeberMe"> 我已同意上述条款</label>
+					</div>
+		        </div>
+		    	
+		    	<div class="center-block" style="text-align:center">
+					            <button type="button" id="registSubmit" class="btn btn-success " >提交</button>
+				            </div>
+		        
+        	</div>
+		</form>
+	</div>
+</body>
+<script>
+$("#registPasswordAgain").on("keyup",checkPassword);
+$("#registPassword").on("keyup",checkPassword);
+valiRrgist();
+
+function checkPassword(){
+	var oldPassword = $("#registPassword").val();
+	var newPassword = $("#registPasswordAgain").val();
+	if(newPassword!=oldPassword && newPassword!="" && oldPassword!=""){
+		$("#registErro").html("两次输入密码不一致");
+	}else{
+		$("#registErro").html("");
+	}
+}
+
+function valiRrgist(){
+	$('#regist').bootstrapValidator({
+	message : 'This value is not valid',
+	feedbackIcons : {
+		valid : 'glyphicon glyphicon-ok',
+		invalid : 'glyphicon glyphicon-remove',
+		validating : 'glyphicon glyphicon-refresh'
+	},
+	fields : {
+		registUserName : {
+			validators : {
+				notEmpty : {
+					message : '请输入用户昵称'
+				},
+				regexp: {
+                       regexp: /^([A-Za-z]|[\u4E00-\u9FA5])+$/,
+                       message: '请输入汉字或字母'
+                   },
+                   stringLength: {
+                       min: 2,
+                       max: 10,
+                       message: '用户最小2个字符，最大10个字符'
+                   }
+			}
+		},
+		registLoginName : {
+			validators : {
+				notEmpty : {
+					message : '请输入登录账号'
+				},
+				regexp: {
+                       regexp: /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/,
+                       message: '请输入正确的登录账号'
+                   }
+			}
+		},
+		registPassword : {
+			validators : {
+				notEmpty : {
+					message : '请输入用户密码'
+				},
+		 regexp: {
+             regexp: /^(\w){6,20}$/,
+             message: '密码格式不正确'
+         }
+			}
+		},
+		registPasswordAgain : {
+			validators : {
+				notEmpty : {
+					message : '请输入用户密码'
+				},
+		 regexp: {
+             regexp: /^(\w){6,20}$/,
+             message: '会员编码只能是8位字母或数字'
+         }
+			}
+		},
+		registUserAge :{
+			validators : {
+				notEmpty : {
+					message : '请输入用户年龄'
+				}
+			}
+		}
+	}
+	});
+};
+
+$("#registSubmit").on('click',function(){
+	$("#regist").data('bootstrapValidator').validate();
+	if($("#regist").data('bootstrapValidator').isValid()){
+	$.ajax({
+		url:'comm/test.action?noCache='+new Date().getTime(),
+		dateType:'json',
+		data:{
+			ACTION_NAME:'REGIST',
+			registUserName:$("#registUserName").val(),//昵称
+			registLoginName:$("#registLoginName").val(),//登录名
+			registPassword:$("#registPassword").val(),//密码
+			registPasswordAgain:$("#registPasswordAgain").val(),
+			registUserAge:$("#registUserAge").val(),
+			userSex:$('input[name="registUserMel"]:checked').val()
+		},
+		timeout:20000,
+		type : 'POST',
+		success:function(json){
+			if(json.ACTION_RETURN_CODE=='000000'){
+				window.document.location.href="index.html";
+			}else{
+				alert(json.ACTION_RETURN_MESSAGE);
+			}
+		},
+		error : function(){
+			alert("网络异常！");							
+		}
+	});
+	}
+});
+</script>
+
+</html>

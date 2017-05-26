@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE abatorConfiguration PUBLIC "-//Apache Software Foundation//DTD Abator for iBATIS Configuration 1.0//EN"
+  "http://ibatis.apache.org/dtd/abator-config_1_0.dtd">
+
+<abatorConfiguration>
+  <abatorContext>    <!-- TODO: Add Database Connection Information -->
+    <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+        connectionURL="jdbc:oracle:thin:@10.10.1.32:1521:qdtestdb"
+        userId="QD_EHUO2TEST"
+        password="dbdkd_DIE84984">
+      <classPathEntry location="D:\ojdbc6.jar" />
+    </jdbcConnection>
+
+    <javaModelGenerator targetPackage="com.qdone.emalls.ymcs.model" targetProject="ymcs" /><!--实体包路径 -->
+    <sqlMapGenerator targetPackage="resource" targetProject="ymcs" /><!--XML路径 -->
+    <daoGenerator type="IBATIS" targetPackage="com.qdone.serverice.impl" targetProject="spring" />
+
+    <table schema="" tableName="YMCS_SHOP"><!--表名 -->
+    	<property name="remarksReporting" value="true"/>
+    </table>
+
+  </abatorContext>
+</abatorConfiguration>
